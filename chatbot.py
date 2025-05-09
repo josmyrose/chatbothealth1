@@ -1,13 +1,15 @@
 
 import openai
-import os
+from openai import OpenAI
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+client = OpenAI()
 
 def llm_response(user_input):
-    prompt = f"User reports the following symptoms: {user_input}. Ask clarifying questions if needed, and guide them to the prediction."
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo", 
-        messages=[{"role": "user", "content": prompt}]
+    response = client.chat.completions.create(
+        model="gpt-3.5-turbo",  # or "gpt-4" if you have access
+        messages=[
+            {"role": "system", "content": "You are a helpful medical assistant."},
+            {"role": "user", "content": user_input}
+        ]
     )
-    return response['choices'][0]['message']['content']
+    return response.choices[0].message.content
