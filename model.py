@@ -5,8 +5,8 @@ import joblib
 
 def train_model():
     df = pd.read_csv("symptoms.csv")
-    X = df.drop("Disease", axis=1)
-    y = df["Disease"]
+    X = df.drop("diseases", axis=1)
+    y = df["diseases"]
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     clf = RandomForestClassifier()
